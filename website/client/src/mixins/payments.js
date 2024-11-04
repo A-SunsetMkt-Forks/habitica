@@ -71,6 +71,7 @@ export default {
         giftData,
         gemsBlock,
         sku,
+        g1g1,
       } = data;
       let { url } = data;
 
@@ -79,6 +80,10 @@ export default {
         paymentCompleted: false,
         paymentType: type,
       };
+
+      if (type === 'gift-subscription') {
+        appState.g1g1 = g1g1;
+      }
 
       if (type === 'subscription') {
         appState.subscriptionKey = this.subscriptionPlan || this.subscription.key;
@@ -164,6 +169,9 @@ export default {
         paymentCompleted: false,
         paymentType,
       };
+      if (paymentType === 'gift-subscription') {
+        appState.g1g1 = data.g1g1;
+      }
       if (paymentType === 'subscription') {
         appState.subscriptionKey = sub.key;
       } else if (paymentType === 'groupPlan') {
@@ -263,76 +271,6 @@ export default {
       }
       return true;
     },
-    amazonPaymentsInit (data) {
-      if (data.type !== 'single' && data.type !== 'subscription') return;
-
-      if (data.type === 'single') {
-        this.amazonPayments.gemsBlock = data.gemsBlock;
-        this.amazonPayments.sku = data.sku;
-      }
-
-      if (data.gift) {
-        if (data.gift.gems && data.gift.gems.amount && data.gift.gems.amount <= 0) return;
-        data.gift.uuid = data.giftedTo;
-        this.amazonPayments.giftReceiver = data.receiverName;
-      }
-
-      if (data.subscription) {
-        this.amazonPayments.subscription = data.subscription;
-        this.amazonPayments.coupon = data.coupon;
-      }
-
-      if (data.groupId) {
-        this.amazonPayments.groupId = data.groupId;
-      }
-
-      if (data.group) { // upgrading a group
-        this.amazonPayments.group = data.group;
-      }
-
-      if (data.groupToCreate) { // creating a group
-        this.amazonPayments.groupToCreate = data.groupToCreate;
-      }
-
-      if (data.demographics) { // sending demographics
-        this.amazonPayments.demographics = data.demographics;
-      }
-
-      this.amazonPayments.gift = data.gift;
-      this.amazonPayments.type = data.type;
-    },
-    amazonOnError (error) {
-      window.alert(error.getErrorMessage()); // eslint-disable-line no-alert
-      this.reset();
-    },
-    // Make sure the amazon session is reset between different sessions and after each purchase
-    amazonLogout () {
-      if (window.amazon && window.amazon.Login && typeof window.amazon.Login.logout === 'function') {
-        window.amazon.Login.logout();
-      }
-    },
-    reset () {
-      // @TODO: Ensure we are using all of these
-      // some vars are set in the payments mixin. We should try to edit in one place
-      this.amazonLogout();
-
-      this.amazonPayments.modal = null;
-      this.amazonPayments.type = null;
-      this.amazonPayments.loggedIn = false;
-
-      // Gift
-      this.amazonPayments.gift = null;
-      this.amazonPayments.giftReceiver = null;
-
-      this.amazonPayments.billingAgreementId = null;
-      this.amazonPayments.orderReferenceId = null;
-      this.amazonPayments.paymentSelected = false;
-      this.amazonPayments.recurringConsent = false;
-      this.amazonPayments.subscription = null;
-      this.amazonPayments.coupon = null;
-      this.amazonPayments.groupToCreate = null;
-      this.amazonPayments.group = null;
-    },
     cancelSubscriptionConfirm (config) {
       if (config.canCancel === false) return;
       this.$root.$emit('habitica:cancel-subscription-confirm', config);
@@ -348,7 +286,7 @@ export default {
       let paymentMethod = group
         ? group.purchased.plan.paymentMethod
         : this.user.purchased.plan.paymentMethod;
-      paymentMethod = paymentMethod === 'Amazon Payments' ? 'amazon' : paymentMethod.toLowerCase();
+      paymentMethod = paymentMethod.toLowerCase();
 
       const queryParams = {
         noRedirect: true,

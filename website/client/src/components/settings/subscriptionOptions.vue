@@ -45,11 +45,18 @@
     <payments-buttons
       v-if="userReceivingGift && userReceivingGift._id"
       :disabled="!subscription.key"
-      :stripe-fn="() => redirectToStripe({gift, uuid: userReceivingGift._id, receiverName})"
-      :paypal-fn="() => openPaypalGift({
-        gift: gift, giftedTo: userReceivingGift._id, receiverName,
+      :stripe-fn="() => redirectToStripe({
+        gift,
+        uuid: userReceivingGift._id,
+        receiverName,
+        g1g1: userReceivingGift.g1g1,
       })"
-      :amazon-data="{type: 'single', gift, giftedTo: userReceivingGift._id, receiverName}"
+      :paypal-fn="() => openPaypalGift({
+        gift,
+        giftedTo: userReceivingGift._id,
+        receiverName,
+        g1g1: userReceivingGift.g1g1,
+      })"
     />
     <payments-buttons
       v-else
@@ -59,11 +66,6 @@
         coupon: subscription.coupon,
       })"
       :paypal-fn="() => openPaypal({url: paypalPurchaseLink, type: 'subscription'})"
-      :amazon-data="{
-        type: 'subscription',
-        subscription: subscription.key,
-        coupon: subscription.coupon
-      }"
     />
   </div>
 </template>
