@@ -75,7 +75,7 @@ jobs:
         CI: true
         NODE_ENV: test
     - run: npm run test:sanity
-  
+
   common:
     runs-on: ubuntu-latest
     strategy:
@@ -122,13 +122,20 @@ jobs:
         CI: true
         NODE_ENV: test
     - run: npm run test:content
-  
+
   api-unit:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [21.x]
         mongodb-version: [7.0]
+    services:
+      mongodb:
+        image: mongo:{{ matrix.mongodb-version }}
+        ports:
+          - 27017:27017
+        options: >-
+          --replSet rs
     steps:
     - uses: actions/checkout@v4
       with:
@@ -137,11 +144,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Start MongoDB ${{ matrix.mongodb-version }} Replica Set
-      uses: supercharge/mongodb-github-action@1.11.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
-        mongodb-replica-set: rs
+
     - run: sudo apt update
     - run: sudo apt -y install libkrb5-dev
     - run: cp config.json.example config.json
@@ -160,6 +163,13 @@ jobs:
       matrix:
         node-version: [21.x]
         mongodb-version: [7.0]
+    services:
+      mongodb:
+        image: mongo:{{ matrix.mongodb-version }}
+        ports:
+          - 27017:27017
+        options: >-
+          --replSet rs
     steps:
     - uses: actions/checkout@v4
       with:
@@ -168,11 +178,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Start MongoDB ${{ matrix.mongodb-version }} Replica Set
-      uses: supercharge/mongodb-github-action@1.11.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
-        mongodb-replica-set: rs
+
     - run: sudo apt update
     - run: sudo apt -y install libkrb5-dev
     - run: cp config.json.example config.json
@@ -191,6 +197,13 @@ jobs:
       matrix:
         node-version: [21.x]
         mongodb-version: [7.0]
+    services:
+      mongodb:
+        image: mongo:{{ matrix.mongodb-version }}
+        ports:
+          - 27017:27017
+        options: >-
+          --replSet rs
     steps:
     - uses: actions/checkout@v4
       with:
@@ -199,11 +212,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Start MongoDB ${{ matrix.mongodb-version }} Replica Set
-      uses: supercharge/mongodb-github-action@1.11.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
-        mongodb-replica-set: rs
+
     - run: sudo apt update
     - run: sudo apt -y install libkrb5-dev
     - run: cp config.json.example config.json
