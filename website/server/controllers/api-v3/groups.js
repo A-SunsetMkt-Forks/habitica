@@ -25,7 +25,6 @@ import {
 import common from '../../../common';
 import payments from '../../libs/payments/payments';
 import stripePayments from '../../libs/payments/stripe';
-import amzLib from '../../libs/payments/amazon';
 import { apiError } from '../../libs/apiError';
 import { model as UserNotification } from '../../models/userNotification';
 
@@ -242,25 +241,6 @@ api.createGroupPlan = {
         sessionId: session.id,
         group: groupResponse,
       });
-    } else if (req.body.paymentType === 'Amazon') {
-      const { billingAgreementId } = req.body;
-      const sub = req.body.subscription
-        ? common.content.subscriptionBlocks[req.body.subscription]
-        : false;
-      const { coupon } = req.body;
-      const groupId = savedGroup._id;
-      const { headers } = req;
-
-      await amzLib.subscribe({
-        billingAgreementId,
-        sub,
-        coupon,
-        user,
-        groupId,
-        headers,
-      });
-
-      res.respond(201, groupResponse);
     }
   },
 };
