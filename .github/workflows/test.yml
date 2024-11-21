@@ -139,7 +139,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Start MongoDB ${{ matrix.mongodb-version }} Replica Set
-      uses: supercharge/mongodb-github-action@1.3.0
+      uses: supercharge/mongodb-github-action@1.11.0
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
         mongodb-replica-set: rs
@@ -175,7 +175,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Start MongoDB ${{ matrix.mongodb-version }} Replica Set
-      uses: supercharge/mongodb-github-action@1.3.0
+      uses: supercharge/mongodb-github-action@1.11.0
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
         mongodb-replica-set: rs
@@ -212,7 +212,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Start MongoDB ${{ matrix.mongodb-version }} Replica Set
-      uses: supercharge/mongodb-github-action@1.3.0
+      uses: supercharge/mongodb-github-action@1.11.0
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
         mongodb-replica-set: rs
