@@ -343,9 +343,7 @@ schema.methods.cancelSubscription = async function cancelSubscription (options =
   const { plan } = this.purchased;
 
   options.user = this;
-  if (plan.paymentMethod === amazonPayments.constants.PAYMENT_METHOD) {
-    return amazonPayments.cancelSubscription(options);
-  } if (plan.paymentMethod === stripePayments.constants.PAYMENT_METHOD) {
+  if (plan.paymentMethod === stripePayments.constants.PAYMENT_METHOD) {
     return stripePayments.cancelSubscription(options);
   } if (plan.paymentMethod === paypalPayments.constants.PAYMENT_METHOD) {
     return paypalPayments.subscribeCancel(options);
