@@ -7,7 +7,6 @@ import { serveClient } from '../libs/client';
 // in which case, respond with a 404 error.
 const TOP_LEVEL_ROUTES = [
   '/api',
-  '/amazon',
   '/iap',
   '/paypal',
   '/stripe',

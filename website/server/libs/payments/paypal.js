@@ -60,7 +60,6 @@ api.constants = {
   // METHOD_BUY_GEMS: 'buyGems',
   // METHOD_CREATE_SUBSCRIPTION: 'createSubscription',
   PAYMENT_METHOD: 'Paypal',
-  // PAYMENT_METHOD_GIFT: 'Amazon Payments (Gift)',
 };
 
 api.paypalPaymentCreate = util.promisify(paypal.payment.create.bind(paypal.payment));
