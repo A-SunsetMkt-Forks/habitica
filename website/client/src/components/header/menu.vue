@@ -354,15 +354,13 @@
             ></div>
             <span>{{ userHourglasses }}</span>
           </div>
-          <div
-            class="item-with-icon gem"
-            @click.prevent="showBuyGemsModal()"
-          >
+          <div class="item-with-icon gem">
             <a
               v-b-tooltip.hover.bottom="$t('gems')"
               class="top-menu-icon svg-icon gem mr-2"
               :aria-label="$t('gems')"
               href="#buy-gems"
+              @click.prevent="showBuyGemsModal()"
               v-html="icons.gem"
             ></a>
             <span>{{ userGems }}</span>
