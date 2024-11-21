@@ -143,12 +143,6 @@
             >
             </span>
           </button>
-          <amazon-button
-            :disabled="disabled"
-            :amazon-data="amazonData"
-            class="btn btn-secondary d-flex amazon"
-            v-html="icons.amazon"
-          />
           <div
             class="pay-with-gems"
             @click="selectedPage = 'initial-buttons'"
@@ -343,19 +337,6 @@
     border-radius: 14px;
     border: 0px;
   }
-  .amazon {
-    margin-bottom: 16px;
-
-    svg {
-      width: 84px;
-      position: absolute;
-    }
-
-    .amazonpay-button-inner-image {
-      opacity: 0;
-      width: 100%;
-    }
-  }
 }
 </style>
 
@@ -522,7 +503,7 @@
     padding-bottom: 10px;
   }
 
-  .stripe, .paypal, .amazon {
+  .stripe, .paypal {
     width: 506px;
     height: 32px;
     margin-left: 4px;
@@ -796,7 +777,6 @@ import { mapState } from '@/libs/store';
 import buy from '@/mixins/buy';
 import notifications from '@/mixins/notifications';
 import payments from '@/mixins/payments';
-import amazonButton from '@/components/payments/buttons/amazon';
 
 // import images
 import close from '@/assets/svg/new-close.svg';
@@ -805,21 +785,13 @@ import gifts from '@/assets/svg/gifts-birthday.svg';
 import cross from '@/assets/svg/cross.svg';
 import stripe from '@/assets/svg/stripe.svg';
 import paypal from '@/assets/svg/paypal-logo.svg';
-import amazon from '@/assets/svg/amazonpay.svg';
 import birthdayGems from '@/assets/svg/birthday-gems.svg';
 import birthdayBackground from '@/assets/svg/icon-background-birthday.svg';
 
 export default {
-  components: {
-    amazonButton,
-  },
   mixins: [buy, notifications, payments],
   data () {
     return {
-      amazonData: {
-        type: 'single',
-        sku: 'Pet-Gryphatrice-Jubilant',
-      },
       icons: Object.freeze({
         close,
         confetti,
@@ -827,7 +799,6 @@ export default {
         cross,
         stripe,
         paypal,
-        amazon,
         birthdayGems,
         birthdayBackground,
       }),

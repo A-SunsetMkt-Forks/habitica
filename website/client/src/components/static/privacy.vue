@@ -72,12 +72,6 @@
         >https://stripe.com/privacy</a>
       </li>
       <li>
-        For Amazon Pay, visit: <a
-          href="https://pay.amazon.com/help/201751600"
-          target="_blank"
-        >https://pay.amazon.com/help/201751600</a>
-      </li>
-      <li>
         For PayPal, visit: <a
           href="https://www.paypal.com/us/webapps/mpp/ua/privacy-full"
           target="_blank"

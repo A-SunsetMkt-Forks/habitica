@@ -649,10 +649,6 @@
     width: 448px;
   }
 
-  .svg-amazon-pay {
-    width: 208px;
-  }
-
   .svg-apple-pay {
     width: 97.1px;
     height: 40px;
@@ -761,7 +757,6 @@ import notificationsMixin from '../../mixins/notifications';
 import subscriptionOptions from './subscriptionOptions.vue';
 import Sprite from '@/components/ui/sprite';
 
-import amazonPayLogo from '@/assets/svg/amazonpay.svg';
 import applePayLogo from '@/assets/svg/apple-pay-logo.svg';
 import calendarIcon from '@/assets/svg/calendar-purple.svg';
 import checkmarkIcon from '@/assets/svg/check.svg';
@@ -801,9 +796,7 @@ export default {
         key: null,
       },
       // @TODO: Remove the need for this or move it to mixin
-      amazonPayments: {},
       paymentMethods: {
-        AMAZON_PAYMENTS: 'Amazon Payments',
         STRIPE: 'Stripe',
         GOOGLE: 'Google',
         APPLE: 'Apple',
@@ -811,7 +804,6 @@ export default {
         GIFT: 'Gift',
       },
       icons: Object.freeze({
-        amazonPayLogo,
         applePayLogo,
         calendarIcon,
         checkmarkIcon,
@@ -923,11 +915,6 @@ export default {
     },
     paymentMethodLogo () {
       switch (this.user.purchased.plan.paymentMethod) {
-        case this.paymentMethods.AMAZON_PAYMENTS:
-          return {
-            icon: this.icons.amazonPayLogo,
-            class: 'svg-amazon-pay',
-          };
         case this.paymentMethods.APPLE:
           return {
             icon: this.icons.applePayLogo,

@@ -129,7 +129,6 @@
         :paypal-fn="() => openPaypalGift({
           gift: gift, giftedTo: userReceivingGems._id, receiverName,
         })"
-        :amazon-data="{type: 'single', gift, giftedTo: userReceivingGems._id, receiverName}"
       />
     </div>
   </b-modal>
@@ -195,7 +194,6 @@ export default {
         subscription: { key: '' },
         message: '',
       },
-      amazonPayments: {},
       assistanceEmailObject: {
         hrefTechAssistanceEmail: `<a href="mailto:${TECH_ASSISTANCE_EMAIL}">${TECH_ASSISTANCE_EMAIL}</a>`,
       },
@@ -265,9 +263,6 @@ export default {
       }, 500);
     },
     onHide () {
-      // @TODO this breaks amazon purchases because when the amazon modal
-      // is opened this one is closed and the amount reset
-      // this.gift.gems.amount = 0;
       this.gift.message = '';
       this.sendingInProgress = false;
     },
