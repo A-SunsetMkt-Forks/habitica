@@ -325,7 +325,6 @@ schema.statics.addComputedStatsToJSONObj = function addComputedStatsToUserJSONOb
  * @param  options
  * @param  options.user  The user object who is purchasing
  * @param  options.groupId  The id of the group purchasing a subscription
- * @param  options.headers  The request headers (only for Amazon subscriptions)
  * @param  options.cancellationReason  A text string to control sending an email
  *
  * @return a Promise from api.cancelSubscription()
