@@ -34,7 +34,7 @@
 </style>
 
 <script>
-import Sprite from '@/components/Sprite.vue';
+import Sprite from '@/components/ui/sprite';
 
 export default {
   components: {
