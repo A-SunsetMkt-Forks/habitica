@@ -345,7 +345,6 @@ export default {
         group = config.group;
       }
 
-      // eslint-disable-next-line
       let paymentMethod = group
         ? group.purchased.plan.paymentMethod
         : this.user.purchased.plan.paymentMethod;
