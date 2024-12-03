@@ -4,7 +4,6 @@ import nconf from 'nconf';
 
 import * as sender from '../../../../../../website/server/libs/email';
 import api from '../../../../../../website/server/libs/payments/payments';
-import amzLib from '../../../../../../website/server/libs/payments/amazon';
 import paypalPayments from '../../../../../../website/server/libs/payments/paypal';
 import stripePayments from '../../../../../../website/server/libs/payments/stripe';
 import { model as User } from '../../../../../../website/server/models/user';
@@ -266,52 +265,6 @@ describe('Purchasing a group plan for group', () => {
     expect(leaderCall.args[1]).to.equal('group-subscription-begins');
   });
 
-  it('sends one email to subscribed member of group, stating subscription is cancelled (Amazon)', async () => {
-    sinon.stub(amzLib, 'getBillingAgreementDetails')
-      .resolves({
-        BillingAgreementDetails: {
-          BillingAgreementStatus: { State: 'Closed' },
-        },
-      });
-
-    const recipient = new User();
-    recipient.profile.name = 'recipient';
-    plan.planId = 'basic_earned';
-    plan.paymentMethod = amzLib.constants.PAYMENT_METHOD;
-    recipient.purchased.plan = plan;
-    recipient.guilds.push(group._id);
-    await recipient.save();
-
-    data.groupId = group._id;
-
-    await api.createSubscription(data);
-
-    expect(sender.sendTxn).to.be.calledThrice;
-    const recipientCall = sender.sendTxn.getCalls().find(call => {
-      const isRecipient = call.args[0]._id === recipient._id;
-      const isJoin = call.args[1] === 'group-member-join';
-      return isRecipient && isJoin;
-    });
-    expect(recipientCall.args[0]._id).to.equal(recipient._id);
-    expect(recipientCall.args[1]).to.equal('group-member-join');
-    expect(recipientCall.args[2]).to.eql([
-      { name: 'LEADER', content: user.profile.name },
-      { name: 'GROUP_NAME', content: group.name },
-      { name: 'PREVIOUS_SUBSCRIPTION_TYPE', content: EMAIL_TEMPLATE_SUBSCRIPTION_TYPE_NORMAL },
-    ]);
-
-    // confirm that the other email sent is not a cancel-subscription email:
-    const leaderCall = sender.sendTxn.getCalls().find(call => {
-      const isLeader = call.args[0]._id === group.leader;
-      const isSubscriptionBegin = call.args[1] === 'group-subscription-begins';
-      return isLeader && isSubscriptionBegin;
-    });
-    expect(leaderCall.args[0]._id).to.equal(group.leader);
-    expect(leaderCall.args[1]).to.equal('group-subscription-begins');
-
-    amzLib.getBillingAgreementDetails.restore();
-  });
-
   it('sends one email to subscribed member of group, stating subscription is cancelled (PayPal)', async () => {
     sinon.stub(paypalPayments, 'paypalBillingAgreementCancel').resolves({});
     sinon.stub(paypalPayments, 'paypalBillingAgreementGet')
@@ -551,33 +504,6 @@ describe('Purchasing a group plan for group', () => {
 
     const updatedUser = await User.findById(recipient._id).exec();
     expect(updatedUser.purchased.plan.extraMonths).to.within(2, 3);
-  });
-
-  it('adds months to members with existing recurring subscription (Amazon)', async () => {
-    sinon.stub(amzLib, 'getBillingAgreementDetails')
-      .resolves({
-        BillingAgreementDetails: {
-          BillingAgreementStatus: { State: 'Closed' },
-        },
-      });
-
-    const recipient = new User();
-    recipient.profile.name = 'recipient';
-    plan.planId = 'basic_earned';
-    plan.paymentMethod = amzLib.constants.PAYMENT_METHOD;
-    plan.lastBillingDate = moment().add(3, 'months');
-    recipient.purchased.plan = plan;
-    recipient.guilds.push(group._id);
-
-    await recipient.save();
-
-    data.groupId = group._id;
-
-    await api.createSubscription(data);
-
-    const updatedUser = await User.findById(recipient._id).exec();
-
-    expect(updatedUser.purchased.plan.extraMonths).to.within(3, 5);
   });
 
   it('adds months to members with existing recurring subscription (Paypal)', async () => {

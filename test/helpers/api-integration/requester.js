@@ -38,7 +38,6 @@ function _requestMaker (user, method, additionalSets = {}) {
       route.indexOf('/email') === 0
       || route.indexOf('/export') === 0
       || route.indexOf('/paypal') === 0
-      || route.indexOf('/amazon') === 0
       || route.indexOf('/stripe') === 0
       || route.indexOf('/analytics') === 0
     ) {

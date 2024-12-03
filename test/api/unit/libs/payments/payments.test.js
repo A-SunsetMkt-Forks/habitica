@@ -520,14 +520,6 @@ describe('payments/index', () => {
         expect(user.purchased.plan.gemsBought).to.eql(10);
       });
 
-      it('sets lastBillingDate if payment method is "Amazon Payments"', async () => {
-        data.paymentMethod = 'Amazon Payments';
-
-        await api.createSubscription(data);
-
-        expect(user.purchased.plan.lastBillingDate).to.exist;
-      });
-
       it('increases the user\'s transaction count', async () => {
         expect(user.purchased.txnCount).to.eql(0);
 

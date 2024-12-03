@@ -15,9 +15,6 @@ setupNconf(configFile, nconf);
 const DEV_BASE_URL = nconf.get('BASE_URL');
 
 const envVars = [
-  'AMAZON_PAYMENTS_SELLER_ID',
-  'AMAZON_PAYMENTS_CLIENT_ID',
-  'AMAZON_PAYMENTS_MODE',
   'EMAILS_COMMUNITY_MANAGER_EMAIL',
   'EMAILS_TECH_ASSISTANCE_EMAIL',
   'EMAILS_PRESS_ENQUIRY_EMAIL',
@@ -171,10 +168,6 @@ module.exports = {
         changeOrigin: true,
       },
       '^/stripe': {
-        target: DEV_BASE_URL,
-        changeOrigin: true,
-      },
-      '^/amazon': {
         target: DEV_BASE_URL,
         changeOrigin: true,
       },
