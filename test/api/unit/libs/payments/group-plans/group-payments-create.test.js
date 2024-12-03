@@ -62,7 +62,6 @@ describe('Purchasing a group plan for group', () => {
       paymentMethod: 'paymentMethod',
       extraMonths: 0,
       dateTerminated: null,
-      lastBillingDate: new Date(),
       dateCreated: new Date(),
       mysteryItems: [],
       consecutive: {
@@ -111,7 +110,6 @@ describe('Purchasing a group plan for group', () => {
     expect(updatedGroup.purchased.plan.paymentMethod).to.eql('Payment Method');
     expect(updatedGroup.purchased.plan.extraMonths).to.eql(0);
     expect(updatedGroup.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedGroup.purchased.plan.lastBillingDate).to.not.exist;
     expect(updatedGroup.purchased.plan.dateCreated).to.exist;
   });
 
@@ -188,7 +186,6 @@ describe('Purchasing a group plan for group', () => {
     expect(updatedLeader.purchased.plan.paymentMethod).to.eql('Group Plan');
     expect(updatedLeader.purchased.plan.extraMonths).to.eql(0);
     expect(updatedLeader.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedLeader.purchased.plan.lastBillingDate).to.not.exist;
     expect(updatedLeader.purchased.plan.dateCreated).to.exist;
 
     expect(updatedLeader.items.mounts['Jackalope-RoyalPurple']).to.be.true;
@@ -451,7 +448,6 @@ describe('Purchasing a group plan for group', () => {
     expect(updatedUser.purchased.plan.paymentMethod).to.eql('Group Plan');
     expect(updatedUser.purchased.plan.extraMonths).to.within(1, 3);
     expect(updatedUser.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedUser.purchased.plan.lastBillingDate).to.not.exist;
     expect(updatedUser.purchased.plan.dateCreated).to.exist;
   });
 
@@ -485,7 +481,6 @@ describe('Purchasing a group plan for group', () => {
     expect(updatedUser.purchased.plan.paymentMethod).to.eql('Group Plan');
     expect(updatedUser.purchased.plan.extraMonths).to.within(3, 5);
     expect(updatedUser.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedUser.purchased.plan.lastBillingDate).to.not.exist;
     expect(updatedUser.purchased.plan.dateCreated).to.exist;
   });
 
@@ -715,7 +710,6 @@ describe('Purchasing a group plan for group', () => {
     expect(updatedUser.purchased.plan.paymentMethod).to.eql('Group Plan');
     expect(updatedUser.purchased.plan.extraMonths).to.eql(extraMonthsBeforeSecond);
     expect(updatedUser.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedUser.purchased.plan.lastBillingDate).to.not.exist;
     expect(updatedUser.purchased.plan.dateCreated).to.eql(firstDateCreated);
   });
 
@@ -765,7 +759,6 @@ describe('Purchasing a group plan for group', () => {
     expect(updatedUser.purchased.plan.paymentMethod).to.eql('Group Plan');
     expect(updatedUser.purchased.plan.extraMonths).to.eql(extraMonthsBeforeSecond);
     expect(updatedUser.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedUser.purchased.plan.lastBillingDate).to.not.exist;
     expect(updatedUser.purchased.plan.dateCreated).to.eql(firstDateCreated);
   });
 
@@ -792,7 +785,6 @@ describe('Purchasing a group plan for group', () => {
     expect(updatedUser.purchased.plan.paymentMethod).to.eql('paymentMethod');
     expect(updatedUser.purchased.plan.extraMonths).to.eql(0);
     expect(updatedUser.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedUser.purchased.plan.lastBillingDate).to.exist;
     expect(updatedUser.purchased.plan.dateCreated).to.exist;
   });
 
@@ -819,7 +811,6 @@ describe('Purchasing a group plan for group', () => {
     expect(updatedUser.purchased.plan.paymentMethod).to.eql(api.constants.GOOGLE_PAYMENT_METHOD);
     expect(updatedUser.purchased.plan.extraMonths).to.eql(0);
     expect(updatedUser.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedUser.purchased.plan.lastBillingDate).to.exist;
     expect(updatedUser.purchased.plan.dateCreated).to.exist;
   });
 
@@ -846,7 +837,6 @@ describe('Purchasing a group plan for group', () => {
     expect(updatedUser.purchased.plan.paymentMethod).to.eql(api.constants.IOS_PAYMENT_METHOD);
     expect(updatedUser.purchased.plan.extraMonths).to.eql(0);
     expect(updatedUser.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedUser.purchased.plan.lastBillingDate).to.exist;
     expect(updatedUser.purchased.plan.dateCreated).to.exist;
   });
 
@@ -874,7 +864,6 @@ describe('Purchasing a group plan for group', () => {
     expect(updatedUser.purchased.plan.paymentMethod).to.eql('Group Plan');
     expect(updatedUser.purchased.plan.extraMonths).to.within(0, 2);
     expect(updatedUser.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedUser.purchased.plan.lastBillingDate).to.not.exist;
     expect(updatedUser.purchased.plan.dateCreated).to.exist;
   });
 });

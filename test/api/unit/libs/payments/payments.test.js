@@ -61,7 +61,6 @@ describe('payments/index', () => {
       paymentMethod: 'paymentMethod',
       extraMonths: 0,
       dateTerminated: null,
-      lastBillingDate: new Date(),
       dateCreated: new Date(),
       mysteryItems: [],
       consecutive: {
@@ -451,7 +450,6 @@ describe('payments/index', () => {
         expect(user.purchased.plan.paymentMethod).to.eql('Payment Method');
         expect(user.purchased.plan.extraMonths).to.eql(0);
         expect(user.purchased.plan.dateTerminated).to.eql(null);
-        expect(user.purchased.plan.lastBillingDate).to.not.exist;
         expect(user.purchased.plan.dateCreated).to.exist;
       });
 
@@ -1383,7 +1381,6 @@ describe('payments/index', () => {
       expect(updatedUser.purchased.plan.paymentMethod).to.eql('Group Plan');
       expect(updatedUser.purchased.plan.extraMonths).to.eql(0);
       expect(updatedUser.purchased.plan.dateTerminated).to.eql(null);
-      expect(updatedUser.purchased.plan.lastBillingDate).to.not.exist;
       expect(updatedUser.purchased.plan.dateCreated).to.exist;
     });
 

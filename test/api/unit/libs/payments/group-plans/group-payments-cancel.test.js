@@ -290,7 +290,6 @@ describe('Canceling a subscription for group', () => {
     expect(updatedUser.purchased.plan.paymentMethod).to.eql('Group Plan');
     expect(updatedUser.purchased.plan.extraMonths).to.eql(extraMonthsBeforeSecond);
     expect(updatedUser.purchased.plan.dateTerminated).to.eql(null);
-    expect(updatedUser.purchased.plan.lastBillingDate).to.not.exist;
     expect(updatedUser.purchased.plan.dateCreated).to.eql(firstDateCreated);
   });
 
@@ -329,7 +328,6 @@ describe('Canceling a subscription for group', () => {
     expect(updatedUser.purchased.plan.paymentMethod).to.eql('Group Plan');
     expect(updatedUser.purchased.plan.extraMonths).to.eql(extraMonthsBeforeSecond);
     expect(updatedUser.purchased.plan.dateTerminated).to.exist;
-    expect(updatedUser.purchased.plan.lastBillingDate).to.not.exist;
     expect(updatedUser.purchased.plan.dateCreated).to.eql(firstDateCreated);
   });
 });
