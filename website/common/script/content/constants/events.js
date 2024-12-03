@@ -103,7 +103,7 @@ export const REPEATING_EVENTS = {
     foodSeason: 'Pie',
   },
   giftOneGetOne: {
-    start: new Date('1970-12-19T04:00-05:00'),
+    start: new Date('1970-12-01T04:00-05:00'),
     end: new Date('1970-01-06T23:59-05:00'),
     promo: 'g1g1',
   },
@@ -146,7 +146,6 @@ export const EVENTS = {
     start: '2024-04-09T08:00-04:00',
     end: '2024-04-30T23:59-04:00',
   },
-
   aprilFools2024: {
     start: '2024-04-01T00:00-04:00',
     end: '2024-04-02T08:00-04:00',
