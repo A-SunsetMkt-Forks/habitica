@@ -79,12 +79,14 @@
           {{ $t('loadMore') }}
         </button>
       </div>
+
       <div class="messages-column d-flex flex-column align-items-center">
         <pm-empty-state
           v-if="uiState === UI_STATES.NO_CONVERSATIONS"
           :chat-revoked="user.flags.chatRevoked"
           @newMessageClicked="showStartNewConversationInput = true"
         />
+
         <pm-disabled-state
           v-if="uiState === UI_STATES.DISABLED"
           :disabled-texts="disabledTexts"
@@ -541,6 +543,7 @@ const CONVERSATIONS_PER_PAGE = 10;
 const PM_PER_PAGE = 10;
 
 const UI_STATES = Object.freeze({
+  LOADING: 'LOADING',
   NO_CONVERSATIONS: 'NO_CONVERSATIONS',
   NO_CONVERSATIONS_SELECTED: 'NO_CONVERSATIONS_SELECTED',
   START_NEW_CONVERSATION: 'START_NEW_CONVERSATION',
@@ -593,7 +596,7 @@ export default defineComponent({
       UI_STATES,
       showStartNewConversationInput: false,
       newConversationTargetUser: null,
-      loaded: false,
+      loadingConversations: true,
       showPopover: false,
 
       /* Conversation-specific data */
@@ -773,9 +776,14 @@ export default defineComponent({
         UI_STATES.NO_CONVERSATIONS_SELECTED,
         UI_STATES.DISABLED,
         UI_STATES.NO_CONVERSATIONS,
+        UI_STATES.LOADING,
       ].includes(this.uiState);
     },
     uiState () {
+      if (this.loadingConversations) {
+        return UI_STATES.LOADING;
+      }
+
       if (this.disabledTexts) {
         return UI_STATES.DISABLED;
       }
@@ -784,9 +792,12 @@ export default defineComponent({
         return UI_STATES.NO_CONVERSATIONS;
       }
 
-      if (!this.selectedConversation.key) {
+      // Hiding the "Select a conversation on the left" state,
+      // and just picking the first conversation once it loads, right away
+      // see reload method
+      /* if (!this.selectedConversation.key) {
         return UI_STATES.NO_CONVERSATIONS_SELECTED;
-      }
+      } */
 
       if (this.selectedConversationMessages.length === 0) {
         return UI_STATES.START_NEW_CONVERSATION;
@@ -817,15 +828,11 @@ export default defineComponent({
     // notification click to refresh
     this.$root.$on(EVENTS.PM_REFRESH, async () => {
       await this.reload();
-
-      this.selectFirstConversation();
     });
 
     // header sync button
     this.$root.$on(EVENTS.RESYNC_COMPLETED, async () => {
       await this.reload();
-
-      this.selectFirstConversation();
     });
 
     await this.reload();
@@ -858,7 +865,7 @@ export default defineComponent({
 
   methods: {
     async reload () {
-      this.loaded = false;
+      this.loadingConversations = true;
       this.conversationPage = 0;
 
       this.loadedConversations = [];
@@ -868,7 +875,9 @@ export default defineComponent({
 
       await this.$store.dispatch('user:markPrivMessagesRead');
 
-      this.loaded = true;
+      await this.selectFirstConversation();
+
+      this.loadingConversations = false;
     },
     async loadConversations () {
       const query = [
@@ -1016,9 +1025,9 @@ export default defineComponent({
       this.selectedConversation.canLoadMore = loadedMessages.length === PM_PER_PAGE;
       this.messagesLoading = false;
     },
-    selectFirstConversation () {
+    async selectFirstConversation () {
       if (this.loadedConversations.length > 0) {
-        this.selectConversation(this.loadedConversations[0].uuid, true);
+        await this.selectConversation(this.loadedConversations[0].uuid, true);
       }
     },
     triggerStartNewConversationState () {
