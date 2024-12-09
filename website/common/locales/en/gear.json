@@ -1679,6 +1679,8 @@
   "armorArmoireStormKnightArmorNotes": "In this armor, you are nearly invincible. Your enemies will never see the storm’s end. Increases Perception by <%= per %>. Enchanted Armoire: Storm Knight Set (Item 2 of 3)",
   "armorArmoireFestiveHelperOverallsText": "Festive Helper Overalls",
   "armorArmoireFestiveHelperOverallsNotes": "Durable and comfortable, these overalls are great for working, playing, and assisting others. Plus, it has pockets! Increases Constitution by <%= con %>. Enchanted Armoire: Festive Helper Set (Item 2 of 2)",
+  "armoreArmoireSnowyTrapperTextSet": "Snowy Fluff-Trimmed Coat",
+  "armoreArmoireSnowyTrapperNotesSet": "As the first flakes fall around you, this coat will not only keep you toasty but also help you blend in perfectly with your snowy surroundings. Glide along the ice in style! Increases Strength and Intelligence by <%= attrs %> each. Enchanted Armoire: Snowy Trapper Hat Set (Item 2 of 2).",
 
   "headgear": "helm",
   "headgearCapitalized": "Headgear",
@@ -2576,6 +2578,8 @@
   "headArmoireStormKnightHelmNotes": "Harness lightning through these antlers as you storm the castle. Increases Constitution by <%= con %>. Enchanted Armoire: Storm Knight Set (Item 1 of 3)",
   "headArmoireFestiveHelperHatText": "Festive Helper Hat",
   "headArmoireFestiveHelperHatNotes": "Holiday tip #27: have a helper hat handy. This one is big enough to keep an emergency toy underneath! Increases Intelligence by <%= int %>. Enchanted Armoire: Festive Helper Set (Item 1 of 2)",
+  "hearArmoireSnowyTrapperTextHat": "Snowy Trapper Hat",
+  "hearArmoireSnowyTrapperNotesHat": "Blue, frostbitten ears will be a thing of the past. Embrace cozy warmth in style! Increases Constitution and Perception by <%= attrs %> each. Enchanted Armoire: Snowy Trapper Hat Set (Item 1 of 2).",
 
   "offhand": "off-hand item",
   "offHandCapitalized": "Off-Hand Item",
