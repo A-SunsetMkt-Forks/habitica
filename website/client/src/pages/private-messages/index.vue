@@ -166,108 +166,108 @@
 </template>
 
 <style lang="scss">
-  @import '~@/assets/scss/colors';
-  @import '~@/assets/scss/variables';
+@import '~@/assets/scss/colors';
+@import '~@/assets/scss/variables';
 
-  $pmHeaderHeight: 56px;
+$pmHeaderHeight: 56px;
 
-  // Content of Private Message should be always full-size (minus the toolbar/resting banner)
+// Content of Private Message should be always full-size (minus the toolbar/resting banner)
 
-  #private-message {
-    height: calc(100vh - #{$menuToolbarHeight} -
+#private-message {
+  height: calc(100vh - #{$menuToolbarHeight} -
+  var(--banner-gift-promo-height, 0px) -
+  var(--banner-damage-paused-height, 0px) -
+  var(--banner-gems-promo-height, 0px)
+  ); // css variable magic :), must be 0px, 0 alone won't work
+
+  .content {
+    flex: 1;
+    height: calc(100vh - #{$menuToolbarHeight} - #{$pmHeaderHeight} -
     var(--banner-gift-promo-height, 0px) -
     var(--banner-damage-paused-height, 0px) -
     var(--banner-gems-promo-height, 0px)
-    ); // css variable magic :), must be 0px, 0 alone won't work
+    );
+  }
 
-    .content {
-      flex: 1;
-      height: calc(100vh - #{$menuToolbarHeight} - #{$pmHeaderHeight} -
-      var(--banner-gift-promo-height, 0px) -
-      var(--banner-damage-paused-height, 0px) -
-      var(--banner-gems-promo-height, 0px)
-      );
-    }
-
-    .disable-background {
-      .toggle-switch-description {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        flex: 1;
-      }
-
-      .toggle-switch-outer {
-        display: flex;
-      }
-
-    }
-
-    .modal-body {
-      padding: 0rem;
-    }
-
-    .modal-content {
-      width: 66vw;
-    }
-
-    .modal-dialog {
-      margin: 10vh 15vw 0rem;
-    }
-
-    .modal-header {
-      padding: 1rem 0rem;
-
-      .close {
-        cursor: pointer;
-        margin: 0rem 1.5rem;
-        min-width: 0.75rem;
-        padding: 0rem;
-        width: 0.75rem;
-      }
-    }
-
+  .disable-background {
     .toggle-switch-description {
-      font-size: 14px;
-      font-weight: bold;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: 1.43;
-      letter-spacing: normal;
-      color: $gray-50;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      flex: 1;
     }
 
-    .empty-messages {
-      flex-flow: column;
-      justify-content: center;
+    .toggle-switch-outer {
+      display: flex;
+    }
 
-      h3, p {
-        color: $gray-200;
-        margin: 0rem;
-      }
+  }
 
-      h2 {
-        color: $gray-200;
-        margin-bottom: 1rem;
-      }
+  .modal-body {
+    padding: 0rem;
+  }
 
-      .no-messages-box {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 330px;
-      }
+  .modal-content {
+    width: 66vw;
+  }
 
-      .envelope {
-        color: $gray-400 !important;
+  .modal-dialog {
+    margin: 10vh 15vw 0rem;
+  }
 
-        svg {
-          width: 86px;
-          height: 64px;
-        }
+  .modal-header {
+    padding: 1rem 0rem;
+
+    .close {
+      cursor: pointer;
+      margin: 0rem 1.5rem;
+      min-width: 0.75rem;
+      padding: 0rem;
+      width: 0.75rem;
+    }
+  }
+
+  .toggle-switch-description {
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: $gray-50;
+  }
+
+  .empty-messages {
+    flex-flow: column;
+    justify-content: center;
+
+    h3, p {
+      color: $gray-200;
+      margin: 0rem;
+    }
+
+    h2 {
+      color: $gray-200;
+      margin-bottom: 1rem;
+    }
+
+    .no-messages-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 330px;
+    }
+
+    .envelope {
+      color: $gray-400 !important;
+
+      svg {
+        width: 86px;
+        height: 64px;
       }
     }
   }
+}
 </style>
 
 <style lang="scss" scoped>
@@ -963,8 +963,6 @@ export default defineComponent({
       this.selectedConversation.lastMessageText = this.newMessage;
       this.selectedConversation.date = new Date();
 
-      this.scrollToBottom();
-
       this.$store.dispatch('members:sendPrivateMessage', {
         toUserId: this.selectedConversation.key,
         message: this.newMessage,
@@ -982,10 +980,23 @@ export default defineComponent({
       });
 
       this.newMessage = '';
+
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 150);
     },
     scrollToBottom () {
+      if (!this.$refs.chatscroll) {
+        return;
+      }
+      const chatscrollBeforeTick = this.$refs.chatscroll.$el;
+      chatscrollBeforeTick.scrollTop = chatscrollBeforeTick.scrollHeight;
+
       Vue.nextTick(() => {
-        if (!this.$refs.chatscroll) return;
+        if (!this.$refs.chatscroll) {
+          alert('NO SCROLL');
+          return;
+        }
         const chatscroll = this.$refs.chatscroll.$el;
         chatscroll.scrollTop = chatscroll.scrollHeight;
       });

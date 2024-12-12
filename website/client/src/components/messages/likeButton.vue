@@ -60,6 +60,7 @@
 .like-button {
   color: $gray-100;
   font-size: 12px;
+  line-height: 16px;
 
   &:hover {
     cursor: pointer;

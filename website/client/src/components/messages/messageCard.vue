@@ -180,7 +180,7 @@
 
 .card {
   background: transparent !important;
-  margin-bottom: 1.2rem !important;
+  margin-bottom: 0 !important;
 }
 
 .message-card:not(.system-message) {
